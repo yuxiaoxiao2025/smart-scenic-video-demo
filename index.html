@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能景点视频处理系统</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@4/lib/index.css">
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">🎬 智能视频匹配</h1>
+            <div class="user-info">
+                <span class="user-avatar">👤</span>
+                <span class="user-name">游客用户</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="main-container">
+        <!-- 上传区域 -->
+        <section class="upload-section">
+            <div class="upload-card">
+                <div class="upload-header">
+                    <h2>📱 上传您的景点视频</h2>
+                    <p class="upload-desc">上传您的景点跟拍视频，我们将为您匹配最相似的专业景点视频并生成60秒精彩合集</p>
+                </div>
+                
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-placeholder">
+                        <div class="upload-icon">➕</div>
+                        <p class="upload-text">点击选择视频文件</p>
+                        <p class="upload-hint">支持MP4格式，最大500MB</p>
+                    </div>
+                    <input type="file" id="videoInput" accept="video/mp4" style="display: none;">
+                </div>
+
+                <!-- 上传进度条 -->
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-info">
+                        <span class="progress-text">上传中...</span>
+                        <span class="progress-percent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+
+                <!-- 景点选择 -->
+                <div class="scenic-spot-selector" id="scenicSpotSelector" style="display: none;">
+                    <label class="form-label">🏔️ 选择景点</label>
+                    <select class="scenic-select" id="scenicSelect">
+                        <option value="">请选择景点</option>
+                        <option value="黄山">黄山</option>
+                        <option value="张家界">张家界</option>
+                        <option value="九寨沟">九寨沟</option>
+                        <option value="泰山">泰山</option>
+                        <option value="华山">华山</option>
+                        <option value="峨眉山">峨眉山</option>
+                        <option value="武夷山">武夷山</option>
+                        <option value="庐山">庐山</option>
+                    </select>
+                </div>
+
+                <!-- 开始匹配按钮 -->
+                <button class="match-btn" id="matchBtn" style="display: none;" disabled>
+                    🔍 开始智能匹配
+                </button>
+            </div>
+        </section>
+
+        <!-- 匹配结果区域 -->
+        <section class="match-section" id="matchSection" style="display: none;">
+            <div class="match-card">
+                <div class="match-header">
+                    <h2>🎯 智能匹配结果</h2>
+                    <div class="match-status" id="matchStatus">
+                        <span class="status-text">匹配中...</span>
+                        <div class="loading-spinner"></div>
+                    </div>
+                </div>
+
+                <!-- 匹配结果列表 -->
+                <div class="match-results" id="matchResults">
+                    <!-- 动态生成匹配结果 -->
+                </div>
+
+                <!-- 生成视频按钮 -->
+                <button class="generate-btn" id="generateBtn" style="display: none;">
+                    🎬 生成60秒视频
+                </button>
+            </div>
+        </section>
+
+        <!-- 视频生成区域 -->
+        <section class="generate-section" id="generateSection" style="display: none;">
+            <div class="generate-card">
+                <div class="generate-header">
+                    <h2>🎞️ 视频生成中</h2>
+                    <div class="generate-status" id="generateStatus">
+                        <span class="status-text">正在生成您的专属视频...</span>
+                        <span class="time-estimate">预计还需 2 分钟</span>
+                    </div>
+                </div>
+
+                <!-- 生成进度 -->
+                <div class="generate-progress">
+                    <div class="progress-steps">
+                        <div class="step active">
+                            <div class="step-icon">✅</div>
+                            <span class="step-text">视频分析</span>
+                        </div>
+                        <div class="step active">
+                            <div class="step-icon">✅</div>
+                            <span class="step-text">智能匹配</span>
+                        </div>
+                        <div class="step processing">
+                            <div class="step-icon">⏳</div>
+                            <span class="step-text">视频拼接</span>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">⭕</div>
+                            <span class="step-text">质量优化</span>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%;"></div>
+                    </div>
+                    <div class="progress-text">65% 完成</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 结果预览区域 -->
+        <section class="result-section" id="resultSection" style="display: none;">
+            <div class="result-card">
+                <div class="result-header">
+                    <h2>🎉 视频生成完成</h2>
+                    <p class="result-desc">您的专属景点视频已生成完成，快来预览和下载吧！</p>
+                </div>
+
+                <!-- 视频预览 -->
+                <div class="video-preview">
+                    <video class="preview-video" controls poster="assets/video-poster.jpg">
+                        <source src="#" type="video/mp4">
+                        您的浏览器不支持视频播放
+                    </video>
+                    <div class="video-info">
+                        <div class="info-item">
+                            <span class="info-label">时长:</span>
+                            <span class="info-value">60秒</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">分辨率:</span>
+                            <span class="info-value">1080P</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">大小:</span>
+                            <span class="info-value">50MB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 操作按钮 -->
+                <div class="result-actions">
+                    <button class="download-btn">
+                        📥 下载视频
+                    </button>
+                    <button class="share-btn">
+                        📤 分享视频
+                    </button>
+                    <button class="restart-btn">
+                        🔄 重新制作
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 底部信息 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 智能景点视频处理系统 - 让每个旅行都有专业级回忆</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
